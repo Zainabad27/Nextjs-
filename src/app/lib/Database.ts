@@ -1,7 +1,4 @@
-import { promises } from "dns";
 import mongoose from "mongoose";
-import { number } from "zod";
-
 
 type connectionobject = {
     isconneted?: number;
