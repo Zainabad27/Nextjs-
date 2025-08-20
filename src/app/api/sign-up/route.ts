@@ -1,10 +1,12 @@
 import DB_CONNECTION from "@/app/lib/Database";
-import usermodel from "@/app/models/user.model";
-import bcrypt from "bcrypt"
-import { SendVerificationEmail } from "@/app/helper/SendVerificationEmail";
-import { VerifyCode_Generator } from "../../helper/VerifyCode_Generator"
-import { success } from "zod";
 
+import usermodel from "@/app/models/user.model";
+
+import { SendVerificationEmail } from "@/app/helper/SendVerificationEmail";
+
+import { VerifyCode_Generator } from "../../helper/VerifyCode_Generator"
+
+import bcrypt from "bcrypt";
 
 
 export async function POST(req: Request) {
