@@ -1,7 +1,7 @@
 import { resend } from "../lib/resendemailsetup";
 
 
-import VerificationEmail from "../../../emails/VerificationEmail";
+import VerificationEmail from "../../emails/VerificationEmail";
 
 import { ApiResponse } from "@/types/ApiResponse";
 

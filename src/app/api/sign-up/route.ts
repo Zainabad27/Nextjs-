@@ -1,10 +1,10 @@
-import DB_CONNECTION from "@/app/lib/Database";
+import DB_CONNECTION from "@/lib/Database";
 
-import usermodel from "@/app/models/user.model";
+import usermodel from "@/models/user.model";
 
-import { SendVerificationEmail } from "@/app/helper/SendVerificationEmail";
+import { SendVerificationEmail } from "@/helper/SendVerificationEmail";
 
-import { VerifyCode_Generator } from "../../helper/VerifyCode_Generator"
+import { VerifyCode_Generator } from "@/helper/VerifyCode_Generator"
 
 import bcrypt from "bcrypt";
 
