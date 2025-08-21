@@ -42,6 +42,7 @@ export async function POST(req: Request) {
             else {
                 const {code,expiry}=VerifyCode_Generator();
                 const emailresponse = await SendVerificationEmail(username, code, email);
+                // console.log(emailresponse);
                 if (!emailresponse.success) {
                     return Response.json({
                         success: false,
@@ -94,7 +95,7 @@ export async function POST(req: Request) {
         const {code,expiry}=VerifyCode_Generator();
         const emailresponse=await SendVerificationEmail(username,code,email);
 
-
+        // console.log(emailresponse);
         if(!emailresponse.success){
             return Response.json({
                 success:false,

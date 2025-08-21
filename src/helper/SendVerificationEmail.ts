@@ -1,11 +1,12 @@
 import { resend } from "../lib/resendemailsetup";
 
-
-import VerificationEmail from "../../emails/VerificationEmail";
+// import VerificationEmail from "../../emails/VerificationEmail";
+import {EmailTemplate} from "../../emails/VerificationEmail";
 
 import { ApiResponse } from "@/types/ApiResponse";
 
 export async function SendVerificationEmail(username: string, verificationcode: string, email: string): Promise<ApiResponse> {
+
 
 
 
@@ -14,7 +15,8 @@ export async function SendVerificationEmail(username: string, verificationcode: 
             from: 'Acme <onboarding@resend.dev>',
             to: email,
             subject: 'Verifying user by sending an OTP to the email.',
-            react: VerificationEmail({ username, otp: verificationcode }),
+            react: EmailTemplate({ username,otp:verificationcode }),
+           
         });
 
 
@@ -25,7 +27,7 @@ export async function SendVerificationEmail(username: string, verificationcode: 
         }
 
     } catch (emailerror) {
-        console.log(emailerror);
+        console.log("error that occured while sending the email",emailerror);
 
         return {
             success: false,
