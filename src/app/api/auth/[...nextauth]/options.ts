@@ -27,20 +27,27 @@ export const AuthOptions: NextAuthOptions = {
                     });
 
 
-                    if(!userinstance){
+                    if (!userinstance) {
                         throw new Error("User does not Exists.");
                     };
 
-                    if(!userinstance.isverified){
+                    if (!userinstance.isverified) {
                         throw new Error("Please verify your account to login.")
                     }
 
-                    const password_correct=await bcrypt.compare(userinstance.password,credentials.password); // true /false
-                    if(!password_correct){
+                    const password_correct = await bcrypt.compare(credentials.password, userinstance.password);
+
+                    if (!password_correct) {
                         throw new Error("Incorrect password.");
                     }
-                    else{
-                        return userinstance;
+                    else {
+                        return {
+                            id: userinstance.id,
+                            username: userinstance.username,
+                            email: userinstance.email,
+                            isverified: userinstance.isverified,
+
+                        }
                     };
 
 
@@ -49,7 +56,7 @@ export const AuthOptions: NextAuthOptions = {
 
 
 
-                } catch (error:any) {
+                } catch (error: any) {
                     throw new Error(error)
                 }
 
@@ -57,11 +64,37 @@ export const AuthOptions: NextAuthOptions = {
 
         })
     ],
-    pages:{
-        signIn:"/sign-in"
+    pages: {
+        signIn: "/sign-in"
     },
-    session:{
-        strategy:"jwt"
+    session: {
+        strategy: "jwt"
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token._id = user.id?.toString();
+                token.isverified = user.isverified;
+                token.isacceptingmessage = user.isacceptingmessage;
+                token.username = user.username;
+
+            }
+            return token;
+        },
+        async session({ session, token }) {
+
+            if (token) {
+                session.user._id = token.id?.toString();
+                session.user.isverified = token.isverified;
+                session.user.isacceptingmessage = token.isacceptingmessage;
+                session.user.username = token.username;
+
+            }
+
+
+
+            return session;
+        }
     },
     secret: process.env.NEXTAUTH_SECRET
 }
