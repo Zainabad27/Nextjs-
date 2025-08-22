@@ -3,19 +3,20 @@ import { resend } from "../lib/resendemailsetup";
 // import VerificationEmail from "../../emails/VerificationEmail";
 import {EmailTemplate} from "../../emails/VerificationEmail";
 
+
 import { ApiResponse } from "@/types/ApiResponse";
 
 export async function SendVerificationEmail(username: string, verificationcode: string, email: string): Promise<ApiResponse> {
 
 
 
-
     try {
         await resend.emails.send({
-            from: 'Acme <onboarding@resend.dev>',
+            from: 'testing@resend.dev',
             to: email,
             subject: 'Verifying user by sending an OTP to the email.',
-            react: EmailTemplate({ username,otp:verificationcode }),
+            // react: EmailTemplate({ username,otp:verificationcode }),
+            text:`this is your otp ${verificationcode}`,
            
         });
 

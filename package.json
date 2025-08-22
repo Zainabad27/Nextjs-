@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -29,9 +30,14 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/supertest": "^6.0.3",
+    "dotenv": "^17.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
+    "next-test-api-route-handler": "^5.0.2",
+    "supertest": "^7.1.4",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

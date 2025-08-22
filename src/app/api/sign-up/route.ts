@@ -1,10 +1,10 @@
-import DB_CONNECTION from "@/lib/Database";
+import DB_CONNECTION from "../../../lib/Database";
 
-import usermodel from "@/models/user.model";
+import usermodel from "../../../models/user.model";
 
-import { SendVerificationEmail } from "@/helper/SendVerificationEmail";
+import { SendVerificationEmail } from "../../../helper/SendVerificationEmail";
 
-import { VerifyCode_Generator } from "@/helper/VerifyCode_Generator"
+import { VerifyCode_Generator } from "../../../helper/VerifyCode_Generator"
 
 import bcrypt from "bcrypt";
 
@@ -50,12 +50,13 @@ export async function POST(req: Request) {
                     }, { status: 500 })
                 }
 
-                const userid = userexistinDB.id;
+                const userid = userexistinDB._id;
                 const hshed_password=await bcrypt.hash(password,10);
+
 
                 const updateduser = await usermodel.findOneAndUpdate(
                     {
-                        id: userid
+                        _id: userid
                     },
                     {
                         username: username,
@@ -69,6 +70,7 @@ export async function POST(req: Request) {
                         new: true,
                     }
                 );
+                // console.log("this is updated user>>>> ",updateduser)
 
                 if (!updateduser) {
                     return Response.json({
