@@ -1,6 +1,5 @@
 import { resend } from "../lib/resendemailsetup";
 
-// import VerificationEmail from "../../emails/VerificationEmail";
 import { EmailTemplate } from "../../emails/VerificationEmail";
 
 
