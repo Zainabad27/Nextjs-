@@ -8,7 +8,7 @@ import { POST as signupHandler } from '../../app/api/sign-up/route';
 
 describe('sign-up api testing', () => {
   beforeEach(async () => {
-    await DB_CONNECTION();
+     await DB_CONNECTION();
     await usermodel.findOneAndDelete({
 
       email: "testuser@example.com",
