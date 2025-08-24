@@ -1,17 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-
 export interface message extends Document {
-    content: {
-        type: String,
-        required: true
-    }
-
+  content: string;
+  createdAt: Date;
 }
 
 const messageSchema: Schema<message> = new Schema({
     content: String,
-}, { timestamps: true });
+    createdAt:Date,
+});
 
 
 export interface user extends Document {

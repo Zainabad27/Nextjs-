@@ -1,16 +1,12 @@
 import DB_CONNECTION from "../../../lib/Database";
 import usermodel from "../../../models/user.model";
 import { MyResponse } from "../../../helper/Myresponse";
-import { message_schema } from "../../../schemas/messageschema";
-import { success } from "zod";
 import mongoose from "mongoose";
-import { isValid } from "zod/v3";
 
 export async function GET(req: Request) {
     await DB_CONNECTION();
     try {
         const { searchParams } = new URL(req.url);
-        console.log(searchParams)
         const userid = searchParams.get("id");
 
         if (!userid) {

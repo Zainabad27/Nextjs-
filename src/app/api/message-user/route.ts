@@ -1,9 +1,10 @@
 import DB_CONNECTION from "../../../lib/Database";
-import usermodel from "../../../models/user.model";
+import usermodel, { message } from "../../../models/user.model";
 import { MyResponse } from "../../../helper/Myresponse";
 import { message_schema } from "../../../schemas/messageschema";
+import mongoose from "mongoose";
 
- 
+
 
 
 
@@ -11,14 +12,50 @@ export async function POST(req: Request) {
     await DB_CONNECTION();
 
     try {
-        const {content}=await req.json()
-        if(!content){
-            return Response.json(new MyResponse(false,"message Content is necessary"),{status:400});
+        const { content } = await req.json()
+        if (!content) {
+            return Response.json(new MyResponse(false, "message Content is necessary"), { status: 400 });
         }
-        
-        // secured route.
-        // i wan't to send message from one user to another user, so i have username/id of the sender (person that is logged-in) and i have Id of the reciever too that i'll get by by queryparams. and in req.body(req.json() for next js) i'll also have the content of message that will be of message type(we defined it in usermodel file).
 
+        const zod_response = message_schema.safeParse({ content: content });
+
+        if (!zod_response.success) {
+            return Response.json(new MyResponse(false, "invalid text given for a message."), { status: 400 });
+
+        };
+
+
+        const { searchParams } = new URL(req.url);
+        const userid = searchParams.get("id");
+
+        if (!userid) {
+            return Response.json(new MyResponse(false, "User id was not given"), { status: 400 });
+        };
+        if (!mongoose.Types.ObjectId.isValid(userid)) {
+            return Response.json(new MyResponse(false, "invalid user id was given."), { status: 400 });
+
+        }
+        const userexists = await usermodel.findOne({
+            _id: userid,
+            isverified: true
+        });
+        if (!userexists) {
+            return Response.json(new MyResponse(false, "User does not exists"), { status: 400 });
+
+        }
+
+        // @ts-ignore
+        const new_message: message = {
+            content: content,
+            createdAt: new Date(Date.now())
+        };
+
+
+        userexists.messages.push(new_message);
+        await userexists.save();
+
+
+        return Response.json(new MyResponse(true, "Message sent successfully to the user."), { status: 201 });
 
 
 
