@@ -43,6 +43,9 @@ export async function POST(req: Request) {
             return Response.json(new MyResponse(false, "User does not exists"), { status: 400 });
 
         }
+        if(!userexists.isacceptingmessage){
+            return Response.json(new MyResponse(false,"this user is not accepting the messages currently."),{status:400})
+        }
 
         // @ts-ignore
         const new_message: message = {
