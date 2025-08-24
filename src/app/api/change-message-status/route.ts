@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const session = await getServerSession(AuthOptions);
 
     if (!session) {
-        return Response.json(new MyResponse(false, "User must be logged-in to fetch messages"))
+        return Response.json(new MyResponse(false, "User must be logged-in to change the message status"))
     }
 
     const user = session.user;
