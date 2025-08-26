@@ -5,7 +5,7 @@ import { username_validation } from "../../../schemas/signupschema";
 import { MyResponse } from "../../../helper/Myresponse";
 
 
-
+ 
 const QueryParamsSchema = z.object({
     username: username_validation
 })

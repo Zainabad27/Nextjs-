@@ -18,6 +18,9 @@ export async function POST(req: Request) {
 
 
         const { username, password, email } = await req.json();
+        // console.log("this is username : ",username)
+        // console.log("this is email : ",email)
+        // console.log("this is password : ",password)
 
         if (!username || !password || !email) {
             return Response.json({
