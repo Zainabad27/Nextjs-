@@ -55,17 +55,14 @@ const page = () => {
 
             }
             else {
-                toast("sign-up failed", { description: res.data.message });
+                toast("sign-up failed mamamia", { description: "mama",className:"bg-red-800"});
 
             }
 
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError<{ message: string }>
-                toast("Sign-up failed", {
-                    description: axiosError.response?.data.message || "some server error occured while.",
-
-                })
+                toast(axiosError.response?.data.message)
 
             }
             else {
