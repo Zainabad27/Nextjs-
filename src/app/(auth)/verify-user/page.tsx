@@ -57,7 +57,6 @@ const page = () => {
                     toast("User verified successfully.")
                 }
                 else {
-                    console.log("This runned.")
                     toast("User verification Failed.", {
                         description: res.data.message || "Some server Error occured."
                     })
