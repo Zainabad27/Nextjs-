@@ -45,6 +45,7 @@ const page = () => {
 
     const onSubmit = async (values: z.infer<typeof verification_schema>) => {
         setisVerifying(true);
+        console.log("email is here :",email)
         let code = values?.code
         try {
             if (code) {
@@ -56,6 +57,7 @@ const page = () => {
                     toast("User verified successfully.")
                 }
                 else {
+                    console.log("This runned.")
                     toast("User verification Failed.", {
                         description: res.data.message || "Some server Error occured."
                     })
@@ -81,10 +83,10 @@ const page = () => {
     }
 
     return (
-        <div className="flex items-center justify-center bg-pink-200 min-h-screen">
+        <div className="flex items-center justify-center bg-pink-300 min-h-screen">
             <div className="w-full max-w-md p-8 space-y-8 bg-pink-100 rounded-lg shadow-md">
                 <div className="text-center">
-                    <h1 className="text-blue-900">Verification</h1>
+                    <h1 className="text-4xl font-bold text-black mb-4">Verification</h1>
                     <Form {...form} >
                         <form onSubmit={form.handleSubmit(onSubmit)}>
                             <FormField
@@ -101,7 +103,7 @@ const page = () => {
                                         </FormControl>
                                         <FormMessage />
                                         <FormDescription>
-                                            Paste Your Code that is sent on {email}
+                                            <p className="mb-5">Paste Your Code that is sent on {email}</p>
                                         </FormDescription>
                                     </FormItem>
                                 )}
