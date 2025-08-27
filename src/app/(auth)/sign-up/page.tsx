@@ -10,11 +10,30 @@ import axios, { AxiosError } from "axios"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { signup_schema } from "../../../schemas/signupschema"
-// import { Form } from "react-hook-form";
-import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
+
+import {
+    Form,
+    FormField,
+    FormControl,
+    FormItem,
+    FormLabel,
+    FormDescription,
+    FormMessage
+
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Loader, Loader2 } from 'lucide-react';
+
+
+import { useAppDispatch } from '../../../lib/hooks/ReducReactHooks'
+import { setUsername, setEmail } from "../../../features/user-verification/userSlice"
+
+
+
+
+
+
 
 
 
@@ -27,11 +46,12 @@ const page = () => {
     const [checkingusernameMSG, setcheckingusernameMSG] = useState('');
 
     const [IsSubmiting, setIsSubmiting] = useState(false);
-    const [Submited, setSubmited] = useState(false);
 
 
     const debounced = useDebounceCallback(setusername, 500);
     const router = useRouter()
+
+    const dispatch = useAppDispatch();
 
 
 
@@ -50,12 +70,19 @@ const page = () => {
         try {
             const res = await axios.post("/api/sign-up", values);
             if (res.data.success) {
+                const username: string = values.username; //wanna set it into userSlice
+                const email: string = values.email; //wanna set it to userSlice
+
+                dispatch(setEmail(email));
+                dispatch(setUsername(username));
+
+
                 toast(res.data.message);
-                 router.replace("/api/verify-user");
+                router.replace("/api/verify-user");
 
             }
             else {
-                toast("sign-up failed mamamia", { description: "mama",className:"bg-red-800"});
+                toast("sign-up failed", { description: "mama", className: "bg-red-800" });
 
             }
 
@@ -87,7 +114,7 @@ const page = () => {
 
                 try {
                     const res = await axios.get(`/api/username-available?username=${username}`);
-                    const incomingMSG=res.data.message
+                    const incomingMSG = res.data.message
                     setcheckingusernameMSG(incomingMSG);
 
                 } catch (error: unknown) {
@@ -138,7 +165,7 @@ const page = () => {
                                             </FormControl>
                                             {checkingusername && <Loader2 className="animate-spin" />}
                                             <p className={`text-sm ${checkingusernameMSG === "Username is available." ? 'text-green-500' : "text-red-500"}`}>
-                                                 {checkingusernameMSG}
+                                                {checkingusernameMSG}
                                             </p>
                                             <FormMessage />
                                         </FormItem>
@@ -153,7 +180,7 @@ const page = () => {
                                             <FormControl>
                                                 <Input placeholder="Email" {...field} />
                                             </FormControl>
-                                            
+
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -167,9 +194,9 @@ const page = () => {
                                             <FormControl>
                                                 <Input placeholder="password" type="password" {...field} />
                                             </FormControl>
-                                          
+
                                             <FormMessage />
-                                              <FormDescription>
+                                            <FormDescription>
                                                 Please Enter your Details.
                                             </FormDescription>
                                         </FormItem>
