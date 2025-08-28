@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from "next/navigation"
 
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -29,7 +30,7 @@ const page = () => {
     // bro to wirte this page i want username,email, and the code i'll just take input in this page so i need email and username.
 
     const [isVerifying, setisVerifying] = useState(false);
-    const [Code, setCode] = useState("");
+    const router = useRouter()
 
     const username = useAppSelector((state) => state.User.username)
     const email = useAppSelector((state) => state.User.email);
@@ -45,7 +46,6 @@ const page = () => {
 
     const onSubmit = async (values: z.infer<typeof verification_schema>) => {
         setisVerifying(true);
-        console.log("email is here :",email)
         let code = values?.code
         try {
             if (code) {
@@ -55,6 +55,8 @@ const page = () => {
                 });
                 if (res.data.success) {
                     toast("User verified successfully.")
+                    router.replace("/verify-user")
+
                 }
                 else {
                     toast("User verification Failed.", {
