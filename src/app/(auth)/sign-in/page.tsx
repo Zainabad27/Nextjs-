@@ -1,5 +1,8 @@
 "use client"
 
+import CardComponent from "../../../components/CustomComponents/CardComponent";
+
+
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -26,6 +29,7 @@ import { Loader2 } from 'lucide-react';
 
 
 import { signIn } from "next-auth/react"
+import { message } from "@/models/user.model";
 
 
 
@@ -60,7 +64,7 @@ const page = () => {
             password: data.password,
             redirect: false
         });
-        console.log("result of sign in ",res);
+        console.log("result of sign in ", res);
 
         if (res?.error) {
             setIsSubmiting(false);
@@ -79,63 +83,74 @@ const page = () => {
     }
 
 
+
+
+    const usermessage: message = {
+        content: "My name is zain ",
+        createdAt: new Date()
+    } as message;
+
+
     return (
-        <div className="flex items-center justify-center min-h-screen bg-pink-300 dark:bg-gray-900">
-            <div className="w-full max-w-md p-8 space-y-8 bg-pink-100 dark:bg-gray-800 rounded-lg shadow-md">
-                <div className="text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">Join Mystery Message</h1>
-                    <p className="mb-4">Login to start your anonymous adventure</p>
-                    <div>
-                        <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                <FormField
-                                    control={form.control}
-                                    name="identifier"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Email/password</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Email/password" {...field} />
-                                            </FormControl>
+        // <div className="flex items-center justify-center min-h-screen bg-pink-300 dark:bg-gray-900">
+        //     <div className="w-full max-w-md p-8 space-y-8 bg-pink-100 dark:bg-gray-800 rounded-lg shadow-md">
+        //         <div className="text-center">
+        //             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">Join Mystery Message</h1>
+        //             <p className="mb-4">Login to start your anonymous adventure</p>
+        //             <div>
+        //                 <Form {...form}>
+        //                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        //                         <FormField
+        //                             control={form.control}
+        //                             name="identifier"
+        //                             render={({ field }) => (
+        //                                 <FormItem>
+        //                                     <FormLabel>Email/password</FormLabel>
+        //                                     <FormControl>
+        //                                         <Input placeholder="Email/password" {...field} />
+        //                                     </FormControl>
 
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="password"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>password</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="password" type="password" {...field} />
-                                            </FormControl>
+        //                                     <FormMessage />
+        //                                 </FormItem>
+        //                             )}
+        //                         />
+        //                         <FormField
+        //                             control={form.control}
+        //                             name="password"
+        //                             render={({ field }) => (
+        //                                 <FormItem>
+        //                                     <FormLabel>password</FormLabel>
+        //                                     <FormControl>
+        //                                         <Input placeholder="password" type="password" {...field} />
+        //                                     </FormControl>
 
-                                            <FormMessage />
-                                            <FormDescription>
-                                                Please Enter your Credentials.
-                                            </FormDescription>
-                                        </FormItem>
-                                    )}
-                                />
-                                <Button type="submit" disabled={IsSubmiting}>
-                                    {
-                                        IsSubmiting ? (
-                                            <>
-                                                <Loader2 className="animate-spin" />
-                                            </>) :
-                                            "Login"
-                                    }
-                                </Button>
-                            </form>
-                        </Form>
-                    </div>
-                </div>
-            </div>
+        //                                     <FormMessage />
+        //                                     <FormDescription>
+        //                                         Please Enter your Credentials.
+        //                                     </FormDescription>
+        //                                 </FormItem>
+        //                             )}
+        //                         />
+        //                         <Button type="submit" disabled={IsSubmiting}>
+        //                             {
+        //                                 IsSubmiting ? (
+        //                                     <>
+        //                                         <Loader2 className="animate-spin" />
+        //                                     </>) :
+        //                                     "Login"
+        //                             }
+        //                         </Button>
+        //                     </form>
+        //                 </Form>
+        //             </div>
+        //         </div>
+        //     </div>
 
 
-        </div>
+        // </div>
+        <>
+            <CardComponent message={usermessage} handleDeletion={()=>{}} />
+        </>
     )
 }
 

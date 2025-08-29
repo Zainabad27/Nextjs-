@@ -1,0 +1,78 @@
+"use client"
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { message } from "../../models/user.model"
+import { X } from "lucide-react"
+
+interface CardProp {
+  message: message;
+  handleDeletion: () => void;
+
+}
+
+
+const CardComponent = ({ message, handleDeletion }: CardProp) => {
+
+  return (
+    <>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Message</CardTitle>
+          <div >
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive"><X className="w-5 h-5"/></Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete your
+                    account and remove your data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDeletion}>Continue</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+
+          </div>
+        </CardHeader>
+        <CardContent>
+          <p>
+            {message.content}
+          </p>
+        </CardContent>
+
+      </Card>
+
+    </>
+  );
+};
+
+export default CardComponent;
