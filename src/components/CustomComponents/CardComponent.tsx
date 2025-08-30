@@ -21,20 +21,53 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
+import { toast } from "sonner"
 
-import { Label } from "@/components/ui/label"
+
+import axios, { AxiosError } from "axios"
+
 import { Button } from "@/components/ui/button"
 import { message } from "../../models/user.model"
 import { X } from "lucide-react"
 
 interface CardProp {
   message: message;
-  handleDeletion: () => void;
+  handleDeletion: (_id: string) => void;
 
 }
 
 
 const CardComponent = ({ message, handleDeletion }: CardProp) => {
+
+
+  const deleteMessage = async () => {
+
+    try {
+
+      const res = await axios.delete(`/api/delete-message?id=${message.id}`);
+
+
+      handleDeletion(message.id);
+
+
+      toast("Message Delete successfully.")
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{ message: string }>
+
+        toast(axiosError.response?.data.message) || toast("some server Error occured,Can't delete Message Rightnow")
+
+
+      }
+      else {
+        console.log("some error occured during the submition of form.", error)
+        toast("Message Delete unsuccessfully.")
+
+
+      }
+
+    }
+  }
 
   return (
     <>
@@ -44,7 +77,7 @@ const CardComponent = ({ message, handleDeletion }: CardProp) => {
           <div >
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive"><X className="w-5 h-5"/></Button>
+                <Button variant="destructive"><X className="w-3 h-3" /></Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -56,7 +89,7 @@ const CardComponent = ({ message, handleDeletion }: CardProp) => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeletion}>Continue</AlertDialogAction>
+                  <AlertDialogAction onClick={deleteMessage}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

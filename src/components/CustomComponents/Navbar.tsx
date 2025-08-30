@@ -17,8 +17,8 @@ const Navbar = () => {
 	const { data: session, status } = useSession();
 
 
-	const [LoggedIn, setLoggedIn] = useState(false);
-	setLoggedIn(status === "authenticated")
+	const LoggedIn=(status === "authenticated")
+	
 
 	const handleSignIn = () => {
 		router.replace("/sign-in");
@@ -32,6 +32,7 @@ const Navbar = () => {
 					<Button className="w-full md:w-auto">
 						{LoggedIn ?
 							(
+							
 								<div className="w-full md:w-auto" onClick={() => signOut()}>
 									Logout
 								</div>

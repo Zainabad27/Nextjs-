@@ -50,7 +50,7 @@ export async function POST(req: Request) {
         }
         if (usermessages.length===0) {
            
-            return Response.json(new MyResponse(true, "eno messages found"), { status: 404 });
+            return Response.json(new MyResponse(true, "no messages found"), { status: 404 });
         }
 
 
