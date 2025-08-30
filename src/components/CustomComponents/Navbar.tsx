@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
