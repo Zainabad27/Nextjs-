@@ -1,14 +1,10 @@
 "use client"
 
-import CardComponent from "../../../components/CustomComponents/CardComponent";
-import Navbar from '@/components/CustomComponents/Navbar';
-
-
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useState } from "react"
+
 
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -56,7 +52,9 @@ const page = () => {
         },
     });
 
-
+    const toSignup = () => {
+        router.replace("/sign-up")
+    }
     const onSubmit = async (data: z.infer<typeof signin_schema>) => {
         setIsSubmiting(true);
 
@@ -106,9 +104,9 @@ const page = () => {
                                     name="identifier"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Email/password</FormLabel>
+                                            <FormLabel>Email/Username</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Email/password" {...field} />
+                                                <Input placeholder="Email/Username" {...field} />
                                             </FormControl>
 
                                             <FormMessage />
@@ -132,7 +130,7 @@ const page = () => {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" disabled={IsSubmiting}>
+                                <Button className="cursor-pointer" type="submit" disabled={IsSubmiting}>
                                     {
                                         IsSubmiting ? (
                                             <>
@@ -141,15 +139,21 @@ const page = () => {
                                             "Login"
                                     }
                                 </Button>
+
+
+
                             </form>
                         </Form>
+                        <div>
+                            <p>Doesn't have an account?<span className="text-blue-600 cursor-pointer"><button className="cursor-pointer" onClick={toSignup}>Sign-up</button></span></p>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
         </div>
-      
+
     )
 }
 

@@ -55,7 +55,7 @@ const page = () => {
                 });
                 if (res.data.success) {
                     toast("User verified successfully.")
-                    router.replace("/verify-user")
+                    router.replace("/dashboard")
 
                 }
                 else {

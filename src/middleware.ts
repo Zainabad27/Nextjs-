@@ -11,18 +11,18 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith("/sign-up") ||
     pathname.startsWith("/verify");
 
-  // if (isPublic) {
-  //   // If logged in, redirect away from auth pages
-  //   if (token) {
-  //     return NextResponse.redirect(new URL("/dashboard", request.url));
-  //   }
-  //   return NextResponse.next();
-  // }
+  if (isPublic) {
+    // If logged in, redirect away from auth pages
+    if (token) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+    return NextResponse.next();
+  }
 
-  // // Protected routes → block if not logged in
-  // if (!token) {
-  //   return NextResponse.redirect(new URL("/sign-in", request.url));
-  // }
+  // Protected routes → block if not logged in
+  if (!token) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
 
   return NextResponse.next(); // ✅ let them in if logged in
 }
