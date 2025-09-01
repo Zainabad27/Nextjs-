@@ -43,11 +43,11 @@ const CardComponent = ({ message, handleDeletion }: CardProp) => {
   const deleteMessage = async () => {
 
     try {
-
-      const res = await axios.delete(`/api/delete-message?id=${message.id}`);
-
-
       handleDeletion(message.id);
+
+      
+      
+      const res = await axios.delete(`/api/delete-message?id=${message.id}`);
 
 
       toast("Message Delete successfully.")
