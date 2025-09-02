@@ -27,7 +27,7 @@ export async function POST(req: Request) {
             return Response.json(new MyResponse(false, "message status was not given."), { status: 400 });
 
         };
-        if (!(messagestatus === "true" || messagestatus === "false")) {
+        if (!(messagestatus == "true" || messagestatus == "false")) {
 
             return Response.json(new MyResponse(false, "message status should be boolean value."), { status: 400 });
         }

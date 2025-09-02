@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import CardComponent from "../../../components/CustomComponents/CardComponent"
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner"
+import { Switch } from "@/components/ui/switch"
+
 
 import { message } from ".././../../models/user.model"
 
@@ -36,7 +38,7 @@ const page = () => {
 
     const { register, watch, setValue } = form;
 
-    const acceptmessages = watch("acceptmessage")
+    const acceptmessage = watch("acceptmessage")
 
     const handleDeletion = (id: string) => {
         console.log(Msg);
@@ -87,6 +89,7 @@ const page = () => {
             const res = await axios.get(`/api/get-message-status?id=${userid}`);
 
             const MSG_status = res.data.isacceptingmessage;
+            console.log(MSG_status)
             setValue("acceptmessage", MSG_status)
 
 
@@ -102,15 +105,16 @@ const page = () => {
         finally {
             setisSwitchLoading(false)
         }
-    }, [setValue])
+    }, [])
 
     useEffect(() => {
+        console.log("This is session....",session?.user.username)
         if (!session || !session.user) return;
         get_messages();
         get_message_status();
 
 
-    }, [session, setValue, isSwitchLoading, acceptingMSG])
+    }, [])
 
     const change_message_status = async () => {
         try {
@@ -154,22 +158,22 @@ const page = () => {
                     <input
                         type="text"
                         value={complete_Url}
-                        disabled
+                        readOnly
                         className="input input-bordered w-full p-2 mr-2"
                     />
-                    <Button onClick={copyToClipboard}>Copy</Button>
+                    <Button className="cursor-pointer" onClick={copyToClipboard}>Copy</Button>
                 </div>
             </div>
 
             <div className="mb-4">
-                <switch
+                <Switch
                     {...register('acceptmessage')}
-                    checked={acceptingMSG}
+                    checked={acceptmessage}
                     onCheckedChange={change_message_status}
                     disabled={isSwitchLoading}
                 />
                 <span className="ml-2">
-                    Accept Messages: {acceptingMSG ? 'On' : 'Off'}
+                    Accept Messages: {acceptmessage ? 'On' : 'Off'}
                 </span>
             </div>
             <Separator />
