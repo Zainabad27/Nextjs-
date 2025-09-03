@@ -108,7 +108,7 @@ const page = () => {
         finally {
             setisSwitchLoading(false)
         }
-    }, [])
+    }, [session])
 
     useEffect(() => {
         if (!session || !session.user) return;
@@ -119,7 +119,7 @@ const page = () => {
         get_message_status();
 
 
-    }, [])
+    }, [session])
 
     const change_message_status = async (checked:boolean) => {
         try {
@@ -173,7 +173,6 @@ const page = () => {
 
             <div className="mb-4">
                 <Switch className="cursor-pointer"
-                    // {...register('acceptmessage')}
                     checked={acceptmessage}
                     onCheckedChange={change_message_status}
 
