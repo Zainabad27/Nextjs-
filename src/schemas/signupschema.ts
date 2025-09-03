@@ -7,7 +7,7 @@ export const username_validation = z
     .max(30, "Username canot be bigger than 30 characters")
     .regex(/^[a-zA-Z0-9_]+$/, "Username Cannot contain special characters.");
 
-const email_validation = z.string().email();
+const email_validation = z.string().email("Invalid Email.");
 
 
 const password_validation = z

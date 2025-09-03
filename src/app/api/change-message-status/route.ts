@@ -23,15 +23,16 @@ export async function POST(req: Request) {
     try {
         const userid = user._id;
         const { messagestatus } = await req.json();
-        if (!messagestatus) {
+        console.log("backend bro....", messagestatus)
+        if (messagestatus === undefined || messagestatus === null) {
             return Response.json(new MyResponse(false, "message status was not given."), { status: 400 });
 
         };
-        if (!(messagestatus == "true" || messagestatus == "false")) {
+        if (!(messagestatus === true || messagestatus === false)) {
 
             return Response.json(new MyResponse(false, "message status should be boolean value."), { status: 400 });
         }
-        const Msg_status = (messagestatus === "true");// convert string true false into boolean true false.
+        const Msg_status = messagestatus
 
 
 
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
 
         }
 
-        
+
         return Response.json(new MyResponse(true, "Status changed successfully."), { status: 200 });
 
     } catch (error) {

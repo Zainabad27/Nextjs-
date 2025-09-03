@@ -24,9 +24,11 @@ const page = () => {
 
 
     const [Msg, setMsg] = useState<message[]>([]);
-    const [acceptingMSG, setacceptingMSG] = useState(false);
     const [isSwitchLoading, setisSwitchLoading] = useState(false);
     const [isLoading, setisLoading] = useState(false);
+    const [complete_Url, setcomplete_Url] = useState("");
+    const [acceptmessage, setacceptmessage] = useState(false);
+
 
     const { data: session } = useSession();
 
@@ -38,7 +40,7 @@ const page = () => {
 
     const { register, watch, setValue } = form;
 
-    const acceptmessage = watch("acceptmessage")
+    // const acceptmessage = watch("acceptmessage")
 
     const handleDeletion = (id: string) => {
         console.log(Msg);
@@ -89,15 +91,16 @@ const page = () => {
             const res = await axios.get(`/api/get-message-status?id=${userid}`);
 
             const MSG_status = res.data.isacceptingmessage;
-            console.log(MSG_status)
-            setValue("acceptmessage", MSG_status)
+            console.log("this is MSG status bro....", MSG_status)
+            // setValue("acceptmessage", MSG_status)
+            setacceptmessage(MSG_status)
 
 
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError<{ message: string }>
-                // toast(axiosError.response?.data.message);
+                console.log(axiosError.response?.data.message);
                 toast("Error Occured while fetching the message status from Server.")
 
             }
@@ -108,25 +111,29 @@ const page = () => {
     }, [])
 
     useEffect(() => {
-        console.log("This is session....",session?.user.username)
         if (!session || !session.user) return;
+        const baseUrl = `${window.location.protocol}//${window.location.host}`;
+
+        setcomplete_Url(`${baseUrl}/u/${session?.user.username}`)
         get_messages();
         get_message_status();
 
 
     }, [])
 
-    const change_message_status = async () => {
+    const change_message_status = async (checked:boolean) => {
         try {
+             setacceptmessage((prev)=>!prev)
+            console.log("The value that u are looking bro", checked)
             const res = await axios.post("/api/change-message-status", {
-                messagestatus: !acceptingMSG
+                messagestatus: checked
             });
-            setValue("acceptmessage", !acceptingMSG)
+           
 
             toast("Status Changed Successfully.");
 
         } catch (error) {
-
+             setacceptmessage((prev)=>!prev)
             const axiosError = error as AxiosError<{ message: string }>
             // toast(axiosError.response?.data.message);
             toast(axiosError.response?.data.message || "Error Occured while fetching the message status from Server.")
@@ -138,11 +145,10 @@ const page = () => {
     }
 
 
-    const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
-    const complete_Url = `${baseUrl}/u/${session?.user.username}`
 
     const copyToClipboard = () => {
+
         window.navigator.clipboard.writeText(complete_Url);
 
         toast("Url copied to clipboard.");
@@ -154,7 +160,7 @@ const page = () => {
 
             <div className="mb-4">
                 <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>{' '}
-                <div className="flex items-center">
+                <div className="flex items-center border border-gray-200 rounded-xl p-3 shadow-md bg-white">
                     <input
                         type="text"
                         value={complete_Url}
@@ -166,11 +172,11 @@ const page = () => {
             </div>
 
             <div className="mb-4">
-                <Switch
-                    {...register('acceptmessage')}
+                <Switch className="cursor-pointer"
+                    // {...register('acceptmessage')}
                     checked={acceptmessage}
                     onCheckedChange={change_message_status}
-                    disabled={isSwitchLoading}
+
                 />
                 <span className="ml-2">
                     Accept Messages: {acceptmessage ? 'On' : 'Off'}
@@ -179,11 +185,11 @@ const page = () => {
             <Separator />
 
             <Button
-                className="mt-4"
+                className="mt-4 cursor-pointer"
                 variant="outline"
                 onClick={(e) => {
                     e.preventDefault();
-                    //fetchMessages(true);
+                    get_messages();
                 }}
             >
                 {isLoading ? (
