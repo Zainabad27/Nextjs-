@@ -103,8 +103,8 @@ const page = () => {
                                             } />
                                         </FormControl>
                                         <FormMessage />
-                                        <FormDescription>
-                                            <p className="mb-5">Paste Your Code that is sent on {email}</p>
+                                        <FormDescription className="mb-5">
+                                            Paste Your Code that is sent on {email}
                                         </FormDescription>
                                     </FormItem>
                                 )}

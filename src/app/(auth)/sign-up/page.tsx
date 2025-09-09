@@ -1,9 +1,9 @@
 "use client"
-
+ 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import Link from "next/link";
+
 import { useState, useEffect } from "react"
 import { useDebounceCallback } from "usehooks-ts"
 import axios, { AxiosError } from "axios"
@@ -28,9 +28,6 @@ import { Loader, Loader2 } from 'lucide-react';
 
 import { useAppDispatch } from '../../../lib/hooks/ReducReactHooks'
 import { setUsername, setEmail } from "../../../features/user-verification/userSlice"
-
-
-
 
 
 

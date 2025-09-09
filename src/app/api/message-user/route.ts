@@ -5,7 +5,7 @@ import { message_schema } from "../../../schemas/messageschema";
 import mongoose from "mongoose";
 
 
-
+ 
 
 
 export async function POST(req: Request) {
@@ -26,25 +26,22 @@ export async function POST(req: Request) {
 
 
         const { searchParams } = new URL(req.url);
-        const userid = searchParams.get("id");
+        const username = searchParams.get("username");
 
-        if (!userid) {
-            return Response.json(new MyResponse(false, "User id was not given"), { status: 400 });
+        if (!username) {
+            return Response.json(new MyResponse(false, "Username was not given"), { status: 400 });
         };
-        if (!mongoose.Types.ObjectId.isValid(userid)) {
-            return Response.json(new MyResponse(false, "invalid user id was given."), { status: 400 });
-
-        }
+       
         const userexists = await usermodel.findOne({
-            _id: userid,
+            username: username,
             isverified: true
         });
         if (!userexists) {
-            return Response.json(new MyResponse(false, "User does not exists"), { status: 400 });
+            return Response.json(new MyResponse(false, "User does not exists"), { status: 200 });
 
         }
         if(!userexists.isacceptingmessage){
-            return Response.json(new MyResponse(false,"this user is not accepting the messages currently."),{status:400})
+            return Response.json(new MyResponse(false,"this user is not accepting the messages currently."),{status:200})
         }
 
         // @ts-ignore
