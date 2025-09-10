@@ -54,7 +54,7 @@ const page = ({ params }: PageProps) => {
         try {
             const res = await axios.get("/api/get-suggested-message");
             const msgarry: SuggestionMessages[] = res.data.messages
-            const slicedarry = msgarry.slice(0, 4) // to show only 4 messages
+            const slicedarry = msgarry.slice(0, 6) // to show only 4 messages
             setSuggestMsg(slicedarry)
             toast("Suggested messages fetched successfully.")
 
