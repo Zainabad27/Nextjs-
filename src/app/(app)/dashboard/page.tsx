@@ -38,9 +38,7 @@ const page = () => {
         resolver: zodResolver(acceptmessage_schema)
     });
 
-    const { register, watch, setValue } = form;
 
-    // const acceptmessage = watch("acceptmessage")
 
     const handleDeletion = (id: string) => {
         console.log(Msg);
@@ -60,9 +58,13 @@ const page = () => {
                 setMsg([])
             }
 
+            console.log("This got ran bro...", res.data.message);
+
             if (refresh) {
                 toast("Showing latest Messages.");
             }
+
+            toast("Message fetched successfully.")
 
 
 
@@ -121,19 +123,19 @@ const page = () => {
 
     }, [session])
 
-    const change_message_status = async (checked:boolean) => {
+    const change_message_status = async (checked: boolean) => {
         try {
-             setacceptmessage((prev)=>!prev)
+            setacceptmessage((prev) => !prev)
             console.log("The value that u are looking bro", checked)
             const res = await axios.post("/api/change-message-status", {
                 messagestatus: checked
             });
-           
+
 
             toast("Status Changed Successfully.");
 
         } catch (error) {
-             setacceptmessage((prev)=>!prev)
+            setacceptmessage((prev) => !prev)
             const axiosError = error as AxiosError<{ message: string }>
             // toast(axiosError.response?.data.message);
             toast(axiosError.response?.data.message || "Error Occured while fetching the message status from Server.")
@@ -208,5 +210,5 @@ const page = () => {
     );
 
 };
- 
+
 export default page;
