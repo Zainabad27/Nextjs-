@@ -1,6 +1,6 @@
 import DB_CONNECTION from "../../../lib/Database";
-import usermodel from "../../../models/user.model";
 import { MyResponse } from "../../../helper/Myresponse";
+import usermodel from "../../../models/user.model";
 import mongoose from "mongoose";
 
 export async function GET(req: Request) {
