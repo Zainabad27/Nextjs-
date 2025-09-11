@@ -12,59 +12,64 @@ export async function POST(req: Request) {
     const session = await getServerSession(AuthOptions);
 
     if (!session) {
-        return Response.json(new MyResponse(false, "User must be logged-in to fetch messages"))
+        return Response.json(new MyResponse(false, "User must be logged-in to fetch messages"), { status: 400 })
     }
 
     const user = session.user;
 
     if (!user) {
-        return Response.json(new MyResponse(false, "User is not logged in."))
+        return Response.json(new MyResponse(false, "User is not logged in."),{status:400})
 
     };
 
+
+
     try {
 
+
         const userid = new mongoose.Types.ObjectId(user._id);
+
         const usermessages = await usermodel.aggregate([
             {
-                $match: { _id: userid }
+                $match: { _id:userid}
             },
             {
-                $unwind: "$messages"
-
-            },
-            {
-                $sort: { "messages.createdAt": -1 }
-            },
-            {
-                $group: {
-                    _id: "$_id",
-                    messages: { $push: "$messages" }
+                $project: {
+                    _id: 0,
+                    messages: 1,
                 }
             }
         ]);
 
-     
+
 
         if (!usermessages) {
-           
+
             return Response.json(new MyResponse(false, "error occured while fetching the messages"), { status: 500 });
         }
-        if (usermessages.length===0) {
-           
+        if (usermessages[0].messages.length === 0) {
+
             return Response.json(new MyResponse(true, "no messages found"), { status: 200 });
         }
 
+        // now i have the messages array inside which i have all the messages but they are not sorted so now i have to sort them by date.
+
+        const non_sorted_array=usermessages[0].messages;
+
+        //@ts-ignore
+        const sorted_array=non_sorted_array.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        
+
 
         return Response.json({
-            success:true,
-            messages:usermessages[0],
-            message:"Messages fetched successfully."
+            success: true,
+            messages: sorted_array,
+            message: "Messages fetched successfully."
 
         }, { status: 200 });
 
     } catch (error) {
-        console.log("Error while change=ing the message status of this user. ", error);
-        return Response.json(new MyResponse(false, "Coudn't change the message status for this user."), { status: 500 })
+        console.log("Error while fetching the messages of this user. ", error);
+        return Response.json(new MyResponse(false, "Coudn't fetch the messages for this user."), { status: 500 })
     }
 }
