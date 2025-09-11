@@ -50,7 +50,7 @@ const page = () => {
     const get_messages = useCallback(async (refresh: boolean = false) => {
         setisLoading(true);
         try {
-            const res = await axios.get("/api/get-user-messages");
+            const res = await axios.post("/api/get-user-messages");
 
             if (res.data.messages) { setMsg(res.data.messages) }
 
