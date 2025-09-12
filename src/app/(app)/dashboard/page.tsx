@@ -41,8 +41,9 @@ const page = () => {
 
 
     const handleDeletion = (id: string) => {
-        console.log("Deleting message from the frontend::::::",Msg);
+        console.log("Deleting message from the frontend before::::::",Msg);
         setMsg(Msg.filter((SingleMsg) => SingleMsg._id !== id))
+        console.log("Deleting message from the frontend after ::::::",Msg);
 
 
 
@@ -115,6 +116,11 @@ const page = () => {
             setisSwitchLoading(false)
         }
     }, [session])
+    // useEffect(()=>{
+    //     setisLoading(true)
+    //     setisLoading(false)
+
+    // },[Msg])
 
     useEffect(() => {
         if (!session || !session.user) return;

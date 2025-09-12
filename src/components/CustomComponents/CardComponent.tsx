@@ -43,7 +43,8 @@ const CardComponent = ({ message, handleDeletion }: CardProp) => {
   const deleteMessage = async () => {
 
     try {
-      handleDeletion(message.id);
+      //@ts-ignore
+      handleDeletion(message._id);
 
       
       
