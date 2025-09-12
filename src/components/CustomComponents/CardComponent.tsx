@@ -47,7 +47,7 @@ const CardComponent = ({ message, handleDeletion }: CardProp) => {
 
       
       
-      const res = await axios.delete(`/api/delete-message?id=${message.id}`);
+      const res = await axios.delete(`/api/delete-message?id=${message._id}`);
 
 
       toast("Message Delete successfully.")
@@ -55,7 +55,7 @@ const CardComponent = ({ message, handleDeletion }: CardProp) => {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{ message: string }>
 
-        toast(axiosError.response?.data.message) || toast("some server Error occured,Can't delete Message Rightnow")
+        toast(axiosError.response?.data.message || "some server Error occured,Can't delete Message Rightnow")
 
 
       }
@@ -77,7 +77,7 @@ const CardComponent = ({ message, handleDeletion }: CardProp) => {
           <div >
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive"><X className="w-3 h-3" /></Button>
+                <Button className="cursor-pointer" variant="destructive"><X className="w-3 h-3 cursor-pointer hover:text-gray-700" /></Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>

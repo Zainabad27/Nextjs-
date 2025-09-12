@@ -29,11 +29,11 @@ const Navbar = () => {
 			<div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
 
 				<div className="flex flex-wrap items-center gap-2 md:flex-row">
-					<Button className="w-full md:w-auto">
+					<Button className="w-full md:w-auto cursor-pointer">
 						{LoggedIn ?
 							(
 							
-								<div className="w-full md:w-auto" onClick={() => signOut()}>
+								<div className="w-full md:w-auto cursor-pointer" onClick={() => signOut()}>
 									Logout
 								</div>
 							) :

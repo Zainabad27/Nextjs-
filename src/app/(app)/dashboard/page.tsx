@@ -41,8 +41,12 @@ const page = () => {
 
 
     const handleDeletion = (id: string) => {
-        console.log(Msg);
-        setMsg(Msg.filter((SingleMsg) => SingleMsg.id !== id))
+        console.log("Deleting message from the frontend::::::",Msg);
+        setMsg(Msg.filter((SingleMsg) => SingleMsg._id !== id))
+
+
+
+        
     }
 
 
@@ -58,7 +62,7 @@ const page = () => {
                 setMsg([])
             }
 
-            console.log("This got ran bro...", res.data.message);
+            // console.log("This got ran bro...", res.data.message);
 
             if (refresh) {
                 toast("Showing latest Messages.");
@@ -201,7 +205,8 @@ const page = () => {
             </Button>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {Msg.length > 0 ? (
-                    Msg.map((Single_message) => (<CardComponent key={Single_message.id} message={Single_message} handleDeletion={handleDeletion} />))
+                    //@ts-ignore
+                    Msg.map((Single_message) => (<CardComponent key={Single_message._id} message={Single_message} handleDeletion={handleDeletion} />))
                 ) : (
                     <p>No messages to display.</p>
                 )}
