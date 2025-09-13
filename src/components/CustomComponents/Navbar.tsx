@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
-
+import { Images } from "@/constants/imagesLink";
 
 
 
@@ -17,36 +17,35 @@ const Navbar = () => {
 	const { data: session, status } = useSession();
 
 
-	const LoggedIn=(status === "authenticated")
-	
+	const LoggedIn = (status === "authenticated")
+
 
 	const handleSignIn = () => {
 		router.replace("/sign-in");
 	}
 
 	return (
-		<nav className="p-4 md:p-6 shadow-md">
-			<div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+		<nav className="p-4 mb-2 md:p-6 shadow-md">
+			<div className="container mx-auto flex justify-between items-center">
 
-				<div className="flex flex-wrap items-center gap-2 md:flex-row">
-					<Button className="w-full md:w-auto cursor-pointer">
-						{LoggedIn ?
-							(
-							
-								<div className="w-full md:w-auto cursor-pointer" onClick={() => signOut()}>
-									Logout
-								</div>
-							) :
-							(
+				{/* Left side content (e.g., logo) */}
+				<img src={Images.MysteryMessageLogo} alt="Logo" className="h-12 w-auto mr-4" />
+				<div className="text-xl font-bold">Mystery Message</div>
 
-								<div className="w-full md:w-auto" onClick={handleSignIn}>Login</div>
-
-							)}
+				{/* Right side login/logout */}
+				<div className="ml-auto">
+					<Button className="cursor-pointer">
+						{LoggedIn ? (
+							<div onClick={() => signOut()}>Logout</div>
+						) : (
+							<div onClick={handleSignIn}>Login</div>
+						)}
 					</Button>
 				</div>
-			</div>
 
+			</div>
 		</nav>
+
 	);
 };
 
