@@ -65,7 +65,7 @@ const page = () => {
 
             // console.log("This got ran bro...", res.data.message);
 
-            if (refresh) {
+            if (refresh) { 
                 toast("Showing latest Messages.");
             }
 
