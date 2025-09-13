@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import ClickableBox from "@/components/CustomComponents/ClickableBox"
 
-
+import { Textarea } from "@/components/ui/textarea"
 import {
     Form,
     FormField,
@@ -141,10 +141,14 @@ const page = ({ params }: PageProps) => {
                             render={({ field }) => (
                                 <FormItem className="w-full p-4">
                                     <FormControl>
-                                        <Input placeholder='Type your message here'  {...field} onChange={(e) => {
-                                            field.onChange(e)
-                                        }
-                                        } className="h-14 text-lg px-4" />
+                                        <div className="grid w-full gap-2">
+                                            <Textarea disabled={IsSendingMsg} placeholder="Type your message here."  {...field} onChange={(e) => {
+                                                field.onChange(e)
+                                            }
+                                            } />
+                                            <Button className='cursor-pointer'>Send message</Button>
+                                        </div>
+
                                     </FormControl>
                                     <FormMessage />
                                     <FormDescription className="mb-5">
@@ -153,7 +157,7 @@ const page = ({ params }: PageProps) => {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" disabled={IsSendingMsg}>
+                        <Button type="submit" className='cursor-pointer' disabled={IsSendingMsg}>
                             {
                                 IsSendingMsg ? (
                                     <>

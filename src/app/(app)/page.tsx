@@ -7,7 +7,7 @@ export default function Home() {
   const { data: session } = useSession();
   return (
     <>
-      Home page {session?.user.username}
+    
     </>
   );
 }
