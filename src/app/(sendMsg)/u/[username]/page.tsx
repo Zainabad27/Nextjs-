@@ -146,7 +146,15 @@ const page = ({ params }: PageProps) => {
                                                 field.onChange(e)
                                             }
                                             } />
-                                            <Button className='cursor-pointer'>Send message</Button>
+                                            <Button type="submit" className='cursor-pointer' disabled={IsSendingMsg}>
+                                                {
+                                                    IsSendingMsg ? (
+                                                        <>
+                                                            <Loader2 className="animate-spin" />
+                                                        </>) :
+                                                        "Send"
+                                                }
+                                            </Button>
                                         </div>
 
                                     </FormControl>
@@ -157,7 +165,7 @@ const page = ({ params }: PageProps) => {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className='cursor-pointer' disabled={IsSendingMsg}>
+                        {/* <Button type="submit" className='cursor-pointer' disabled={IsSendingMsg}>
                             {
                                 IsSendingMsg ? (
                                     <>
@@ -165,7 +173,7 @@ const page = ({ params }: PageProps) => {
                                     </>) :
                                     "Send"
                             }
-                        </Button>
+                        </Button> */}
                     </form>
                 </Form>
 

@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
         const { username, password, email } = await req.json();
         // console.log("this is username : ",username)
-        // console.log("this is email : ",email)
+        console.log("this is email : ",email)
         // console.log("this is password : ",password)
 
         if (!username || !password || !email) {
@@ -43,9 +43,9 @@ export async function POST(req: Request) {
             }
             // User already exists but is not verified
             else {
-                const {code,expiry}=VerifyCode_Generator();
+                const { code, expiry } = VerifyCode_Generator();
                 const emailresponse = await SendVerificationEmail(username, code, email);
-                // console.log(emailresponse);
+                //  console.log("this is the email response::::::::::::",emailresponse);
                 if (!emailresponse.success) {
                     return Response.json({
                         success: false,
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
                 }
 
                 const userid = userexistinDB._id;
-                const hshed_password=await bcrypt.hash(password,10);
+                const hshed_password = await bcrypt.hash(password, 10);
 
 
                 const updateduser = await usermodel.findOneAndUpdate(
@@ -64,8 +64,8 @@ export async function POST(req: Request) {
                     {
                         username: username,
                         password: hshed_password,
-                        verifycode:code,
-                        expiryverifycode:expiry,
+                        verifycode: code,
+                        expiryverifycode: expiry,
 
 
                     },
@@ -86,9 +86,9 @@ export async function POST(req: Request) {
 
 
                 return Response.json({
-                    success:true,
-                    message:"User signed-up successfully."
-                },{status:200})
+                    success: true,
+                    message: "User signed-up successfully."
+                }, { status: 200 })
 
             }
         };
@@ -97,43 +97,43 @@ export async function POST(req: Request) {
         // user does not exists at all
 
 
-        const {code,expiry}=VerifyCode_Generator();
-        const emailresponse=await SendVerificationEmail(username,code,email);
+        const { code, expiry } = VerifyCode_Generator();
+        const emailresponse = await SendVerificationEmail(username, code, email);
 
-        // console.log(emailresponse);
-        if(!emailresponse.success){
+        // console.log("this is the email response::::::::::::", emailresponse);
+        if (!emailresponse.success) {
             return Response.json({
-                success:false,
-                message:"problem occured while sending the verification email."
-            },{status:500})
+                success: false,
+                message: "problem occured while sending the verification email."
+            }, { status: 500 })
         };
 
-        const hashed_password=await bcrypt.hash(password,10)
+        const hashed_password = await bcrypt.hash(password, 10)
 
 
-       const userinstance= await usermodel.create({
+        const userinstance = await usermodel.create({
             username,
             email,
-            password:hashed_password,
-            isverified:false,
-            verifycode:code,
-            expiryverifycode:expiry,
-            messages:[],
+            password: hashed_password,
+            isverified: false,
+            verifycode: code,
+            expiryverifycode: expiry,
+            messages: [],
 
         });
 
 
-        if(!userinstance.id){
+        if (!userinstance.id) {
             return Response.json({
-                success:false,
-                message:"Problem occured while saving the Data into the DATABASE."
-            },{status:500})
+                success: false,
+                message: "Problem occured while saving the Data into the DATABASE."
+            }, { status: 500 })
         };
 
         return Response.json({
-            success:true,
-            message:"Account Created Successfully."
-        },{status:200});
+            success: true,
+            message: "Account Created Successfully."
+        }, { status: 200 });
 
 
 
