@@ -67,7 +67,7 @@ const page = () => {
 
         if (res?.error) {
             setIsSubmiting(false);
-            toast("Invaid Username or Password.")
+            toast(res.error||"Invaid Username or Password.")
         }
         else {
             setIsSubmiting(false);

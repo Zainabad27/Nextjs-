@@ -28,7 +28,7 @@ export const AuthOptions: NextAuthOptions = {
 
 
                     if (!userinstance) {
-                        throw new Error("User does not Exists.");
+                        throw new Error("Email/Username does not Exists in the Database.");
                     };
 
                     if (!userinstance.isverified) {
