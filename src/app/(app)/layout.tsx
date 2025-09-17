@@ -1,12 +1,8 @@
 import "./global.css";
 
 
-// import Navbar from '@/components/CustomComponents/Navbar';
-
-
-
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/ui/app-sidebar";
+import { AppSidebar } from "@/components/CustomComponents/app-sidebar";
 
 
 
@@ -21,7 +17,7 @@ export default function RootLayout({
         {/* <Navbar /> */}
          <SidebarProvider>
         <AppSidebar />
-        <SidebarTrigger />
+        <SidebarTrigger className="cursor-pointer" />
         {children}
           </SidebarProvider>
 
